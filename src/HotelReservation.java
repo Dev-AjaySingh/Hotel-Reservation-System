@@ -1,5 +1,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class HotelReservation
@@ -42,6 +43,42 @@ public class HotelReservation
                         
                 }
 
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    public void reserveRoom(Connection connection, Scanner scanner)
+    {
+        try
+        {
+            System.out.println("Enter guest name");
+            String guestname=scanner.next();
+            scanner.nextLine();
+            System.out.println("Enter room number");
+            int roomnumber=scanner.nextInt();
+            System.out.println("Enter contact number");
+            String contactnumber=scanner.next();
+
+            String sql="INSERT into reservations (guest_name, room_number, contact_number)" + "VALUES" +
+                    " ('" + guestname + "', "+roomnumber+", '" +contactnumber +"')";
+
+            try (Statement statement=connection.createStatement())
+            {
+                int affecteeedroews=statement.executeUpdate(sql);
+
+                if(affecteeedroews>0)
+                {
+                    System.out.println("Reservation Successful");
+                }
+                else
+                {
+                    System.out.println("Reservation Failed");
+                }
             }
         }
         catch (Exception e)
