@@ -40,7 +40,8 @@ public class HotelReservation
                 switch (choise)
                 {
                     case 1:
-                        
+                        reserveRoom(connection,scanner);
+                        break;
                 }
 
             }
@@ -52,7 +53,7 @@ public class HotelReservation
     }
 
 
-    public void reserveRoom(Connection connection, Scanner scanner)
+    public static void reserveRoom(Connection connection, Scanner scanner)
     {
         try
         {
