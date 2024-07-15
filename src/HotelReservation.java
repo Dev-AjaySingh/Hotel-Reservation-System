@@ -1,6 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Scanner;
 
 public class HotelReservation
@@ -42,6 +40,9 @@ public class HotelReservation
                     case 1:
                         reserveRoom(connection,scanner);
                         break;
+                    case 2:
+                        viewReservation(connection);
+                        break;
                 }
 
             }
@@ -65,7 +66,7 @@ public class HotelReservation
             System.out.println("Enter contact number");
             String contactnumber=scanner.next();
 
-            String sql="INSERT into reservations (guest_name, room_number, contact_number)" + "VALUES" +
+            String sql="INSERT into reservation (guest_name, room_number, contact_number)" + "VALUES" +
                     " ('" + guestname + "', "+roomnumber+", '" +contactnumber +"')";
 
             try (Statement statement=connection.createStatement())
@@ -86,5 +87,26 @@ public class HotelReservation
         {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static void viewReservation(Connection connection) throws SQLException
+    {
+        String sql="SELECT reservation_id, guest_name, room_number, contact_number, reservation_date FROM reservation";
+        try(Statement statement=connection.createStatement();
+            ResultSet resultSet=statement.executeQuery(sql))
+        {
+            System.out.println("Current Reservation");
+            while (resultSet.next())
+            {
+                int reservationId=resultSet.getInt("reservation_id");
+                String guestName=resultSet.getString("guest_name");
+                int roomNumber=resultSet.getInt("room_number");
+                String contactNumber= resultSet.getString("contact_number");
+                String reservationDate=resultSet.getTimestamp("reservation_date").toString();
+                System.out.println(reservationId+" "+guestName+" "+roomNumber+" "+contactNumber+" "+reservationDate);
+
+            }
+        }
+
     }
 }
