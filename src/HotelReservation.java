@@ -43,6 +43,9 @@ public class HotelReservation
                     case 2:
                         viewReservation(connection);
                         break;
+                    case 3:
+                        getroomnumber(scanner,connection);
+                        break;
                 }
 
             }
@@ -108,5 +111,36 @@ public class HotelReservation
             }
         }
 
+    }
+
+    public static void getroomnumber(Scanner scanner, Connection connection)
+    {
+        try {
+
+
+            System.out.println("Enter the ID");
+            int reservationId = scanner.nextInt();
+            System.out.println("Enter name");
+            String guestName = scanner.next();
+
+            String sql = "SELECT room_number FROM reservation " +
+                    "WHERE reservation_id= " + reservationId +
+                    "AND guest_name= '" + guestName + "'";
+
+            try (Statement statement = connection.createStatement();
+                 ResultSet resultSet = statement.executeQuery(sql)) {
+                if (resultSet.next()) {
+                    int roomNumber = resultSet.getInt("room_number");
+                    System.out.println("the room number is " + roomNumber);
+                } else {
+                    System.out.println("No reservation found");
+                }
+
+            }
+        }
+        catch (SQLException e)
+        {
+           e.printStackTrace();
+        }
     }
 }
