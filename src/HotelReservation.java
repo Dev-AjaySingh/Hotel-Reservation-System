@@ -120,27 +120,40 @@ public class HotelReservation
 
             System.out.println("Enter the ID");
             int reservationId = scanner.nextInt();
-            System.out.println("Enter name");
-            String guestName = scanner.next();
 
             String sql = "SELECT room_number FROM reservation " +
-                    "WHERE reservation_id= " + reservationId +
-                    "AND guest_name= '" + guestName + "'";
+                    "WHERE reservation_id = " + reservationId;
 
             try (Statement statement = connection.createStatement();
                  ResultSet resultSet = statement.executeQuery(sql)) {
                 if (resultSet.next()) {
                     int roomNumber = resultSet.getInt("room_number");
                     System.out.println("the room number is " + roomNumber);
-                } else {
+                }
+                else
+                {
                     System.out.println("No reservation found");
                 }
 
             }
+
         }
         catch (SQLException e)
         {
            e.printStackTrace();
+        }
+    }
+
+    public static void deleteReservation(Scanner scanner, Connection connection)
+    {
+        try {
+            System.out.println("Enter reservation id to delete");
+            int reservationId=scanner.nextInt();
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
         }
     }
 }
