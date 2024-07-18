@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.Scanner;
+import java.util.SortedMap;
 
 public class HotelReservation
 {
@@ -52,8 +53,12 @@ public class HotelReservation
                     case 5:
                         deleteReservation(connection,scanner);
                         break;
-                    case 6:
+                    case 0:
                         exit();
+                        scanner.close();
+                        return;
+                    default:
+                        System.out.println("invalid choice");
                 }
 
             }
@@ -246,14 +251,16 @@ public class HotelReservation
 
     private static void exit() throws InterruptedException
     {
+        System.out.println("Exiting System");
         int i=5;
         while(i!=0)
         {
-            System.out.println(".");
+            System.out.print(".");
             Thread.sleep(450);
             i--;
         }
         System.out.println();
         System.out.println("Thank-you for Using Hotel Reservation System.");
     }
+
 }
