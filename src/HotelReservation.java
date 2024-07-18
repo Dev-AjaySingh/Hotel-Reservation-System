@@ -254,6 +254,6 @@ public class HotelReservation
             i--;
         }
         System.out.println();
-        System.out.println("Thank-you for Using Hotel Reservation System");
+        System.out.println("Thank-you for Using Hotel Reservation System.");
     }
 }
