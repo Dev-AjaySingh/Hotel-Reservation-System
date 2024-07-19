@@ -74,29 +74,47 @@ public class HotelReservation
     {
         try
         {
-            System.out.println("Enter guest name");
-            String guestname=scanner.next();
-            scanner.nextLine();
-            System.out.println("Enter room number");
-            int roomnumber=scanner.nextInt();
-            System.out.println("Enter contact number");
-            String contactnumber=scanner.next();
+//            System.out.println("Enter guest name");
+//            String guestname=scanner.next();
+//            scanner.nextLine();
+//            System.out.println("Enter room number");
+//            int roomnumber=scanner.nextInt();
+//            System.out.println("Enter contact number");
+//            String contactnumber=scanner.next();
 
-            String sql="INSERT into reservation (guest_name, room_number, contact_number)" + "VALUES" +
-                    " ('" + guestname + "', "+roomnumber+", '" +contactnumber +"')";
+//            String sql="INSERT into reservation (guest_name, room_number, contact_number)" + "VALUES" +
+//                    " ('" + guestname + "', "+roomnumber+", '" +contactnumber +"')";
+            String sql= "select * from reservation where reservation_id=? and guest_name = ? ";
 
             try (Statement statement=connection.createStatement())
             {
-                int affecteeedroews=statement.executeUpdate(sql);
+                //int affecteeedroews=statement.executeUpdate(sql);
 
-                if(affecteeedroews>0)
+                PreparedStatement preparedStatement=connection.prepareStatement(sql);
+                preparedStatement.setInt(1,1);
+                preparedStatement.setString(2,"tom");
+                ResultSet resultSet=preparedStatement.executeQuery();
+
+
+//                if(affecteeedroews>0)
+//                {
+//                    System.out.println("Reservation Successful");
+//                }
+//                else
+//                {
+//                    System.out.println("Reservation Failed");
+//                }
+                while (resultSet.next())
                 {
-                    System.out.println("Reservation Successful");
+                    int id=resultSet.getInt("reservation_id");
+                    String name=resultSet.getString("guest_name");
+                    String number=resultSet.getString("contact_number");
+                    System.out.println("ID:"+id);
+                    System.out.println("Name:"+name);
+                    System.out.println("Contact"+number);
+
                 }
-                else
-                {
-                    System.out.println("Reservation Failed");
-                }
+                connection.close();
             }
         }
         catch (Exception e)
