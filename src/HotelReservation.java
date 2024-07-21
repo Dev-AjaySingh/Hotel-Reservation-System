@@ -239,7 +239,7 @@ public class HotelReservation
                 }
                 else
                 {
-                    System.out.println("deletion failed");
+                    System.out.println("deletion failed!");
                 }
             }
         }
